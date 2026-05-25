@@ -1,0 +1,66 @@
+.toolboxContainer {
+    position: absolute;
+    top: 25%;
+    left: 20px;
+    width: fit-content;
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    z-index: 10;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.toolItem {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toolText {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+}
+
+.itemContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.colorBox {
+    width: 25px;
+    height: 25px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform 0.1s ease;
+}
+
+.colorBox:hover {
+    transform: scale(1.1);
+}
+
+.colorBox.active {
+    border: 2px solid #ccc;
+    transform: scale(1.1);
+}
+
+.sliderContainer {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slider {
+    writing-mode: vertical-lr;
+    direction: rtl;
+    vertical-align: bottom;
+    height: 100px;
+    cursor: pointer;
+}
