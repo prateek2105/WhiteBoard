@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     elements: [],
     actionHistory: [], // Stores a timeline of actions { action: 'ADD'|'REMOVE', element: {} }
-    historyPointer: -1 // Points to the current position in actionHistory
+    historyPointer: -1, // Points to the current position in actionHistory
+    savedImageData: null
 };
 
 const boardSlice = createSlice({
@@ -69,9 +70,12 @@ const boardSlice = createSlice({
                     state.elements = state.elements.filter(el => el.id !== nextAction.element.id);
                 }
             }
+        },
+        saveCanvasImage: (state, action) => {
+            state.savedImageData = action.payload;
         }
     }
 });
 
-export const { setElements, addElement, updateElement, removeElement, undo, redo } = boardSlice.actions;
+export const { setElements, addElement, updateElement, removeElement, undo, redo, saveCanvasImage } = boardSlice.actions;
 export default boardSlice.reducer;

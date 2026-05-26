@@ -1,11 +1,10 @@
-import React, { useRef, useEffect, useState } from 'react'
-import rough from 'roughjs/bundled/rough.esm.js';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useRef, useState, useLayoutEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import rough from 'roughjs/bundled/rough.cjs.js';
+import { MENU_ITEMS } from '../src/constants';
+import { addElement, updateElement, removeElement, saveCanvasImage } from '../src/store/boardSlice';
 import Menu from './Menu';
 import Toolbox from './Toolbox';
-import { MENU_ITEMS } from '../src/constants';
-import { addElement, updateElement, setElements, removeElement, undo, redo } from '../src/store/boardSlice';
-import { actionItemClick } from '../src/store/menuSlice';
 
 const isPointInElement = (x, y, element) => {
     const { type, startX, startY, endX, endY, points } = element;
@@ -238,6 +237,16 @@ const Whiteboard = () => {
     const stopDrawing = () => {
         setIsDrawing(false);
         setCurrentElementId(null);
+        
+        if (canvasRef.current) {
+            // Wait for next frame so the final drawn element is fully captured
+            requestAnimationFrame(() => {
+                if (canvasRef.current) {
+                    const dataURL = canvasRef.current.toDataURL('image/png');
+                    dispatch(saveCanvasImage(dataURL));
+                }
+            });
+        }
     };
 
     return (

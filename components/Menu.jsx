@@ -8,13 +8,29 @@ import styles from './Menu.module.css'
 const Menu = () => {
     const dispatch = useDispatch()
     const activeMenuItem = useSelector((state) => state.menu.activeMenuItem)
+    const savedImageData = useSelector((state) => state.board.savedImageData)
 
     const handleMenuClick = (itemName) => {
         dispatch(menuItemClick(itemName))
     }
 
+    const handleDownload = () => {
+        if (!savedImageData) return;
+        
+        const link = document.createElement('a');
+        link.download = `whiteboard-${Date.now()}.png`;
+        link.href = savedImageData;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     const handleActionClick = (itemName) => {
-        dispatch(actionItemClick(itemName))
+        if (itemName === MENU_ITEMS.DOWNLOAD) {
+            handleDownload();
+        } else {
+            dispatch(actionItemClick(itemName))
+        }
     }
 
     return (
